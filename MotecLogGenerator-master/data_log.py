@@ -117,8 +117,15 @@ class DataLog(object):
             values = line.split(",")
 
             # Timestamp is the first element
-            t = float(values[0])
-
+            # t = float(values[0])
+            if not values or values[0].strip() == "":
+                continue
+            try:
+                t = float(values[0])
+            except ValueError:
+                # Skip the row if the timestamp cannot be converted to a float
+                continue
+                        
             # Grab each remaining channel value. We keep a map of all the channel names and column
             # numbers we are retrieving, so we will look at that to determine which columns to read.
             # If we fail to read an entry in any column, we will delete that channel entirely.
@@ -137,10 +144,23 @@ class DataLog(object):
                     print("WARNING: Found non numeric values for channel %s, removing channel" % \
                         name)
                     invalid_channels.append(name)
+            # # Loop through each channel we track.
+            # for name, i in channel_dict.items():
+            #     try:
+            #         # Attempt to parse the channel's numeric value.
+            #         val = float(values[i + 1])
+            #         message = Message(t, val)
+            #         # Append the message for the channel. (Assuming you have a structure like self.channels[name])
+            #         self.channels[name].append(message)
+            #     except ValueError:
+            #         # Instead of marking this channel as invalid, just skip this sample.
+            #         print("Warning: non-numeric value for channel '{}' at time {}. Skipping this sample."
+            #             .format(name, t))
+            #         continue
 
-            for name in invalid_channels:
-                del channel_dict[name]
-                del self.channels[name]
+            # for name in invalid_channels:
+            #     del channel_dict[name]
+            #     del self.channels[name]
 
             j += 1
 
