@@ -144,23 +144,6 @@ class DataLog(object):
                     print("WARNING: Found non numeric values for channel %s, removing channel" % \
                         name)
                     invalid_channels.append(name)
-            # # Loop through each channel we track.
-            # for name, i in channel_dict.items():
-            #     try:
-            #         # Attempt to parse the channel's numeric value.
-            #         val = float(values[i + 1])
-            #         message = Message(t, val)
-            #         # Append the message for the channel. (Assuming you have a structure like self.channels[name])
-            #         self.channels[name].append(message)
-            #     except ValueError:
-            #         # Instead of marking this channel as invalid, just skip this sample.
-            #         print("Warning: non-numeric value for channel '{}' at time {}. Skipping this sample."
-            #             .format(name, t))
-            #         continue
-
-            # for name in invalid_channels:
-            #     del channel_dict[name]
-            #     del self.channels[name]
 
             j += 1
 
